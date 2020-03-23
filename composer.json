@@ -1,0 +1,17 @@
+{
+    "name": "webbio/post-exporter",
+    "description": "Webbio's WordPress plugin to export WordPress posts to CouchDB",
+    "homepage": "https://webbio.nl",
+    "authors": [
+        {
+            "name": "Joeri Smits",
+            "email": "joeri@webbio.nl",
+            "homepage": "https://joeri.dev"
+        }
+    ],
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=5.3.2",
+        "composer/installers": "v1.0.6"
+    }
+}
