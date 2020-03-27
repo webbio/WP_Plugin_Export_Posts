@@ -3,6 +3,7 @@
 include('render-settings-page.php');
 include('lib/couchdb-sender.php');
 include('lib/post.php');
+include('lib/menu.php');
 /*
 Plugin Name: Export to JSON on Save
 Description: When a post is saved we generate a json export for this post
@@ -25,6 +26,7 @@ class ExportToJsonOnSave {
 	var $settings;
 	var $CouchDBSender;
 	var $Post;
+	var $Menu;
 	
 	/*
 	*  __construct
@@ -61,6 +63,9 @@ class ExportToJsonOnSave {
 		if(class_exists('Post')) {
 			$this->Post = new Post();
 		}
+		if(class_exists('Menu')) {
+			$this->Menu = new Menu();
+		}
 	}
 
 	function nc_settings_link( $links ) {
@@ -82,7 +87,7 @@ class ExportToJsonOnSave {
 
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
-		$this->CouchDBSender->sendPost($post);
+		$this->CouchDBSender->sendItem($post);
 	}
 }
 

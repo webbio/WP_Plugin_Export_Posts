@@ -20,11 +20,14 @@ if( !class_exists('Post') ) :
             $modules = $this->checkWhenToSwapWithDefault($postMeta['modules']);
 
             return array(
-                '_id' => $blogId . '-' . $post->ID,
+                '_id' => $blogId . '-post-' . $post->ID,
                 'blogId' => $blogId,
-                'post' => $post,
-                'permalink' => $permalink,
-                'modules' => $modules
+                'type' => 'post',
+                'data' => array(
+                    'post' => $post,
+                    'permalink' => $permalink,
+                    'modules' => $modules
+                )
             );
         }
 

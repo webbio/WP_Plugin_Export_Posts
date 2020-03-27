@@ -17,7 +17,7 @@ class CouchDBSender {
 		$this->couchDbAuthKey = $this->staticVars['authorization_key'];
     }
 
-    function sendPost($body) {
+    function sendItem($body) {
 		$etag = $this->retrieveRevision($body);
 		if($etag) {
 			$body['_rev'] = $etag;
