@@ -18,11 +18,13 @@ if( !class_exists('Post') ) :
             $postMeta = get_fields($post_id);
             $permalink = get_permalink($post_id);
             $modules = $this->checkWhenToSwapWithDefault($postMeta['modules']);
+            $taxonomies = wp_get_post_terms($post_id, get_taxonomies('','names'));
 
             return array(
                 '_id' => $blogId . '-post-' . $post->ID,
                 'blogId' => $blogId,
                 'type' => 'post',
+                'taxonomies' => $taxonomies,
                 'data' => array(
                     'post' => $post,
                     'permalink' => $permalink,
