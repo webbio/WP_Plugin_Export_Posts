@@ -34,6 +34,8 @@ if( !class_exists('Post') ) :
         }
 
         function checkWhenToSwapWithDefault($modules) {
+            if(is_array($modules) === false || count($modules) === 0) return [];
+
             foreach($modules as $key => $module) {
                 if($module['useDefault'] == true) {
                     $modules[$key] = $this->swapDataWithDefaultValues($module);

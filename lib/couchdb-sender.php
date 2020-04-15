@@ -35,7 +35,24 @@ class CouchDBSender {
 		if ( is_wp_error( $response ) ) {
 			wp_die($response->get_error_message());
 		}
-    }
+	}
+	
+	function removeItem($body) {
+		$id = $body['_id'];
+		$etag = $this->retrieveRevision($body);
+
+		$response = wp_remote_request( $this->couchDbUrl . '/' . $id . '?rev=' . $etag, array(
+			'method' => 'DELETE',
+			'headers' => array(
+				'Content-Type' => 'application/json',
+				'Authorization' => 'Basic ' . $this->couchDbAuthKey
+			))
+		);
+
+		if ( is_wp_error( $response ) ) {
+			wp_die($response->get_error_message());
+		}
+	}
     
     private function retrieveRevision($body) {
 		$id = $body['_id'];
