@@ -19,6 +19,7 @@ class CouchDBSender {
 
     function sendItem($body) {
 		$etag = $this->retrieveRevision($body);
+
 		if($etag) {
 			$body['_rev'] = $etag;
 		}
@@ -38,12 +39,11 @@ class CouchDBSender {
     
     private function retrieveRevision($body) {
 		$id = $body['_id'];
-		$response = wp_remote_post( $this->couchDbUrl, array(
+		$response = wp_remote_head( $this->couchDbUrl . '/' . $id, array(
 			'headers' => array(
 				'Content-Type' => 'application/json',
 				'Authorization' => 'Basic ' . $this->couchDbAuthKey
-			),
-			'body' => json_encode($body))
+			))
 		);
 		if ( is_wp_error( $response ) ) {
 			wp_die($response->get_error_message());

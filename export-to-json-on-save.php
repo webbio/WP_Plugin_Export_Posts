@@ -52,6 +52,7 @@ class ExportToJsonOnSave {
 
 		add_action('plugins_loaded', array($this, 'class_init'));
 		add_action('acf/save_post', array($this, 'onPostSave'), 100, 3);
+		add_action('before_delete_post', array($this, 'onPostDelete'), 100, 3);
 		add_filter('plugin_action_links_export-to-json-on-save/export-to-json-on-save.php', array($this, 'nc_settings_link'));
 	}
 
@@ -88,6 +89,10 @@ class ExportToJsonOnSave {
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
 		$this->CouchDBSender->sendItem($post);
+	}
+
+	function onPostDelete($post_id) {
+		
 	}
 }
 

@@ -51,9 +51,16 @@ class ExportToJSONSettings {
 		$query = new WP_Query($args);
 		while ( $query->have_posts() ) : $query->the_post();
 			$postId = get_the_ID();
+
 			$post = $this->Post->getPost($postId);
 			$this->CouchDBSender->sendItem($post);
 		endwhile;
+
+		$pages = get_pages(); 
+		foreach ( $pages as $page ) {
+			$post = $this->Post->getPost($page->ID);
+			$this->CouchDBSender->sendItem($post);
+		}
 	}
 
 	public function export_all_menus() {
