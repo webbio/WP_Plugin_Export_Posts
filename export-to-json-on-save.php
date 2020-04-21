@@ -50,7 +50,6 @@ class ExportToJsonOnSave {
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
 		
-		
 		add_action('plugins_loaded', array($this, 'class_init'));
 		add_action('acf/save_post', array($this, 'onPostSave'), 100, 3);
 		add_action('untrash_post', array($this, 'onPostSave'), 100, 3);
