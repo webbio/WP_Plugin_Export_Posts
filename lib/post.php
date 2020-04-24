@@ -20,7 +20,7 @@ if( !class_exists('Post') ) :
             $modules = $this->checkWhenToSwapWithDefault($postMeta['modules']);
             $taxonomies = wp_get_post_terms($post_id, get_taxonomies('','names'));
             $metaData = $this->getMetaData($post_id);
-            
+
             return array(
                 '_id' => $blogId . '-post-' . $post->ID,
                 'blogId' => $blogId,
@@ -77,6 +77,7 @@ if( !class_exists('Post') ) :
                 'metaRobotIndex' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-noindex', ''),
                 'metaRobotFollow' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-nofollow', ''),
                 'metaRobotAdvanced' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-adv', ''),
+                'featuredImage' => get_the_post_thumbnail_url($post_id),
             );
         }
     }
