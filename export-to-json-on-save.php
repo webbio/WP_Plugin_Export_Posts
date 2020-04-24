@@ -49,11 +49,12 @@ class ExportToJsonOnSave {
 			'url'		=> plugin_dir_url( __FILE__ ),
 			'path'		=> plugin_dir_path( __FILE__ )
 		);
-
+		
 		add_action('plugins_loaded', array($this, 'class_init'));
 		add_action('acf/save_post', array($this, 'onPostSave'), 100, 3);
 		add_action('untrash_post', array($this, 'onPostSave'), 100, 3);
 		add_action('wp_trash_post', array($this, 'onPostDelete'), 100, 3);
+		add_action('publish_to_draft', array($this, 'onUpdateDelete'), 100, 3);
 		add_filter('plugin_action_links_export-to-json-on-save/export-to-json-on-save.php', array($this, 'nc_settings_link'));
 	}
 
@@ -89,11 +90,18 @@ class ExportToJsonOnSave {
 
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
-		$this->CouchDBSender->sendItem($post);
+		if (get_post_status($post_id) === 'publish'){
+			$this->CouchDBSender->sendItem($post);
+		}
 	}
 
 	function onPostDelete($post_id) {
 		$post = $this->Post->getPost($post_id);
+		$this->CouchDBSender->removeItem($post);
+	}
+
+	function onUpdateDelete($post) {
+		$post = $this->Post->getPost($post->ID);
 		$this->CouchDBSender->removeItem($post);
 	}
 }
