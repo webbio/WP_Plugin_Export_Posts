@@ -54,7 +54,9 @@ if( !class_exists('Post') ) :
                     $result = $default;
                 }
             }
-    
+            // Set the useDefault to true, otherwise the options overrides the useDefault
+            $result['useDefault'] = true;
+            
             return $result;
         }
     }
