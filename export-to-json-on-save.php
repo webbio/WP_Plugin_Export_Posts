@@ -54,6 +54,7 @@ class ExportToJsonOnSave {
 		add_action('acf/save_post', array($this, 'onPostSave'), 100, 3);
 		add_action('untrash_post', array($this, 'onPostSave'), 100, 3);
 		add_action('wp_trash_post', array($this, 'onPostDelete'), 100, 3);
+		add_action('delete_post', array($this, 'onPostDelete'), 100, 3);
 		add_action('publish_to_draft', array($this, 'onUpdateDelete'), 100, 3);
 		add_filter('plugin_action_links_export-to-json-on-save/export-to-json-on-save.php', array($this, 'nc_settings_link'));
 	}
