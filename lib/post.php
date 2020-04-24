@@ -64,21 +64,39 @@ if( !class_exists('Post') ) :
 
         function getMetaData($post_id) {
             return array(
-                'seoTitle' => get_post_meta($post_id, '_yoast_wpseo_title', 'SEO Title'),
-                'seoMetaDescription' => get_post_meta($post_id, '_yoast_wpseo_metadesc', 'SEO Meta Description'),
-                'focusKeyword' => get_post_meta($post_id, '_yoast_wpseo_focuskw', 'SEO Focus keyword'),
-                'siteMap' => get_post_meta($post_id, '_yoast_wpseo_sitemap-include', ''),
-                'siteMapPrio' => get_post_meta($post_id, '_yoast_wpseo_sitemap-prio  ', 'SEO Focus keyword'),
-                'canonicalUrl' => get_post_meta($post_id, '_yoast_wpseo_canonical ', 'Canonical Url'),
-                'redirectUrl' => get_post_meta($post_id, '_yoast_wpseo_redirect', 'Redirect url'),
-                'facebookTitle' => get_post_meta($post_id, '_yoast_wpseo_opengraph-title ', 'Facebook Title'),
-                'facebookDescription' => get_post_meta($post_id, '_yoast_wpseo_opengraph ', 'Facebook Description'),
-                'facebookImage' => get_post_meta($post_id, '_yoast_wpseo_opengraph-image ', 'Image Url'),
-                'metaRobotIndex' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-noindex', ''),
-                'metaRobotFollow' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-nofollow', ''),
-                'metaRobotAdvanced' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-adv', ''),
+                'seoTitle' => get_post_meta($post_id, '_yoast_wpseo_title', true),
+                'seoMetaDescription' => get_post_meta($post_id, '_yoast_wpseo_metadesc', true),
+                'canonicalUrl' => get_post_meta($post_id, '_yoast_wpseo_canonical', true),
+                'facebookTitle' => get_post_meta($post_id, '_yoast_wpseo_opengraph-title', true),
+                'facebookDescription' => get_post_meta($post_id, '_yoast_wpseo_opengraph-description', true),
+                'facebookImage' => get_post_meta($post_id, '_yoast_wpseo_opengraph-image', true),
+                'twitterTitle' => get_post_meta($post_id, '_yoast_wpseo_twitter-title', true),
+                'twitterDescription' => get_post_meta($post_id, '_yoast_wpseo_twitter-description', true),
+                'twitterImage' => get_post_meta($post_id, '_yoast_wpseo_twitter-image', true),
+                'metaRobotIndex' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-noindex', true),
+                'metaRobotFollow' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-nofollow', true),
+                'metaRobotAdvanced' => get_post_meta($post_id, '_yoast_wpseo_meta-robots-adv', true),
                 'featuredImage' => get_the_post_thumbnail_url($post_id),
+                'hreflang' => $this->getHrefLang($post_id),
             );
+        }
+
+        function getHrefLang($post_id) {
+            $postMeta = get_post_meta($post_id);
+            $result = [];
+
+
+            foreach($postMeta as $metaKey => $metaValue) {
+                if(strpos($metaKey, 'hreflang') !== false) {
+                    array_push($result, array(
+                        'lang' => $metaKey,
+                        'value' => $metaValue[0]
+                        )
+                    );
+                }
+            }
+
+            return $result;
         }
     }
 endif;
