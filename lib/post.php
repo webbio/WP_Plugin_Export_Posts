@@ -108,7 +108,7 @@ if( !class_exists('Post') ) :
                 foreach($postMeta as $metaKey => $metaValue) {
                     if(strpos($metaKey, 'hreflang') !== false) {
                         array_push($result, array(
-                            'lang' => $metaKey,
+                            'lang' => str_replace('hreflang-', '', $metaKey),
                             'value' => $metaValue[0]
                             )
                         );
