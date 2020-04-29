@@ -101,6 +101,21 @@ if( !class_exists('Post') ) :
                 );
             }
 
+
+            if(empty($href_web) && empty($href_lang)) {
+                $postMeta = get_post_meta($post_id);
+
+                foreach($postMeta as $metaKey => $metaValue) {
+                    if(strpos($metaKey, 'hreflang') !== false) {
+                        array_push($result, array(
+                            'lang' => $metaKey,
+                            'value' => $metaValue[0]
+                            )
+                        );
+                    }
+                }
+            }
+
             return $result;
         }
     }
