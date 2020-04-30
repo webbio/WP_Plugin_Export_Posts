@@ -13,6 +13,11 @@ if( !class_exists('Post') ) :
         }
 
         function getPost($post_id) {
+            print_r($_POST);
+
+            die();
+
+
             $blogId = get_current_blog_id();
             $post = get_post($post_id);
             $postMeta = get_fields($post_id);
@@ -64,18 +69,19 @@ if( !class_exists('Post') ) :
 
         function getMetaData($post_id) {
             return array(
-                'seoTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_title', true),
-                'seoMetaDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_metadesc', true),
-                'canonicalUrl' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_canonical', true),
-                'facebookTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-title', true),
-                'facebookDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-description', true),
-                'facebookImage' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-image', true),
-                'twitterTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-title', true),
-                'twitterDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-description', true),
-                'twitterImage' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-image', true),
-                'metaRobotIndex' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-noindex', true),
-                'metaRobotFollow' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-nofollow', true),
-                'metaRobotAdvanced' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-adv', true),
+                'seoTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_title'),
+                'seoMetaDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_metadesc'),
+                'breadcrumbTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_bctitle'),
+                'canonicalUrl' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_canonical'),
+                'facebookTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-title'),
+                'facebookDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-description'),
+                'facebookImage' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_opengraph-image'),
+                'twitterTitle' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-title'),
+                'twitterDescription' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-description'),
+                'twitterImage' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_twitter-image'),
+                'metaRobotIndex' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-noindex'),
+                'metaRobotFollow' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-nofollow'),
+                'metaRobotAdvanced' => $this->getMostRecentPostMeta($post_id, 'yoast_wpseo_meta-robots-adv'),
                 'featuredImage' => get_the_post_thumbnail_url($post_id),
                 'hreflang' => $this->getHrefLang($post_id),
             );
