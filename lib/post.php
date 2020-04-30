@@ -13,11 +13,6 @@ if( !class_exists('Post') ) :
         }
 
         function getPost($post_id) {
-            print_r($_POST);
-
-            die();
-
-
             $blogId = get_current_blog_id();
             $post = get_post($post_id);
             $postMeta = get_fields($post_id);
