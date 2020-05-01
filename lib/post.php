@@ -13,6 +13,11 @@ if( !class_exists('Post') ) :
         }
 
         function getPost($post_id) {
+            // print_r($_POST);
+
+            // die();
+
+
             $blogId = get_current_blog_id();
             $post = get_post($post_id);
             $postMeta = get_fields($post_id);
@@ -83,7 +88,9 @@ if( !class_exists('Post') ) :
         }
 
         function getMostRecentPostMeta($post_id, $metaKey) {
-            if (empty($_POST[$metaKey])) {
+            $metaValue = get_post_meta($post_id, '_' . $metaKey, true);
+
+            if (empty($_POST[$metaKey]) && isset($_POST[$metaKey]) == false) {
                 return get_post_meta($post_id, '_' . $metaKey, true);
             }
             return $_POST[$metaKey];
