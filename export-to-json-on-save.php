@@ -59,7 +59,8 @@ class ExportToJsonOnSave {
 		add_action('delete_post', array($this, 'onPostDelete'), 100, 3);
 		add_action('publish_to_draft', array($this, 'onUpdateDelete'), 100, 3);
 		add_filter('plugin_action_links_export-to-json-on-save/export-to-json-on-save.php', array($this, 'nc_settings_link'));
-		add_filter('pre_option_home', array($this, 'setHomeUrl'), 10, 2 );
+		add_filter('pre_option_home', array($this, 'setHomeUrl'), 10, 2 ); // Set home_url to the correct front-end url
+		add_filter('rest_url', array($this, 'setRestUrl'), 10, 4); // Change rest_url because by default it's picking the home_url which we changed to the front-end url
 		add_theme_support( 'post-thumbnails' ); // Use post-thumbnails as featured images for SEO reasons in Webbio theme
 	}
 
@@ -115,6 +116,11 @@ class ExportToJsonOnSave {
 
 	function setHomeUrl() {
 		$url = $this->General->wpse_pre_option_home();
+		return $url;
+	}
+
+	function setRestUrl() {
+		$url = $this->General->filter_rest_url();
 		return $url;
 	}
 

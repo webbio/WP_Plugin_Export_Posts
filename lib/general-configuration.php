@@ -23,5 +23,9 @@ if( !class_exists('General') ) :
             }
             
         }
+
+        function filter_rest_url() {
+            return WP_HOME.'/wp-json/';
+        }
     }
 endif;
