@@ -4,6 +4,7 @@ include('render-settings-page.php');
 include('lib/couchdb-sender.php');
 include('lib/post.php');
 include('lib/menu.php');
+include('lib/general-configuration.php');
 /*
 Plugin Name: Export to JSON on Save
 Description: When a post is saved we generate a json export for this post
@@ -27,6 +28,7 @@ class ExportToJsonOnSave {
 	var $CouchDBSender;
 	var $Post;
 	var $Menu;
+	var $General;
 	
 	/*
 	*  __construct
@@ -57,6 +59,8 @@ class ExportToJsonOnSave {
 		add_action('delete_post', array($this, 'onPostDelete'), 100, 3);
 		add_action('publish_to_draft', array($this, 'onUpdateDelete'), 100, 3);
 		add_filter('plugin_action_links_export-to-json-on-save/export-to-json-on-save.php', array($this, 'nc_settings_link'));
+		add_filter('pre_option_home', array($this, 'setHomeUrl'), 10, 2 );
+		add_theme_support( 'post-thumbnails' ); // Use post-thumbnails as featured images for SEO reasons in Webbio theme
 	}
 
 
@@ -69,6 +73,9 @@ class ExportToJsonOnSave {
 		}
 		if(class_exists('Menu')) {
 			$this->Menu = new Menu();
+		}
+		if(class_exists('General')) {
+			$this->General = new General();
 		}
 	}
 
@@ -105,6 +112,12 @@ class ExportToJsonOnSave {
 		$post = $this->Post->getPost($post->ID);
 		$this->CouchDBSender->removeItem($post);
 	}
+
+	function setHomeUrl() {
+		$url = $this->General->wpse_pre_option_home();
+		return $url;
+	}
+
 }
 
 // initialize

@@ -73,10 +73,10 @@ class ExportToJSONSettings {
 
 	public function export_to_json_settings_add_plugin_page() {
 		add_options_page(
-			'Export to JSON Settings', // page_title
-			'Export to JSON Settings', // menu_title
+			'Viper set-up', // page_title
+			'Viper set-up', // menu_title
 			'manage_options', // capability
-			'export-to-json-settings', // menu_slug
+			'viper-settings', // menu_slug
 			array( $this, 'export_to_json_settings_create_admin_page' ) // function
 		);
 	}
@@ -90,9 +90,8 @@ class ExportToJSONSettings {
 	?>
 
 		<div class="wrap">
-			<h2>Export to JSON Settings</h2>
+			<h2>Viper set-up</h2>
 			<p></p>
-			<?php settings_errors(); ?>
 
 			<form method="post" action="options.php">
 				<?php
@@ -115,7 +114,7 @@ class ExportToJSONSettings {
 
 		add_settings_section(
 			'export_to_json_settings_setting_section', // id
-			'Settings', // title
+			'Export to JSON settings', // title
 			array( $this, 'export_to_json_settings_section_info' ), // callback
 			'export-to-json-settings-admin' // page
 		);
@@ -135,6 +134,21 @@ class ExportToJSONSettings {
 			'export-to-json-settings-admin', // page
 			'export_to_json_settings_setting_section' // section
 		);
+
+		add_settings_section(
+			'viper_setup_setting_section', // id
+			'General Viper Set-up settings', // title
+			array( $this, 'viper_setup_section_info' ), // callback
+			'export-to-json-settings-admin' // page
+		);
+
+		add_settings_field(
+			'frontend_url', // id
+			'Front-end URL', // title
+			array( $this, 'frontend_url_callback' ), // callback
+			'export-to-json-settings-admin', // page
+			'viper_setup_setting_section' // section
+		);
 	}
 
 	public function export_to_json_settings_sanitize($input) {
@@ -147,10 +161,18 @@ class ExportToJSONSettings {
 			$sanitary_values['authorization_key'] = sanitize_text_field( $input['authorization_key'] );
 		}
 
+		if ( isset( $input['frontend_url'] ) ) {
+			$sanitary_values['frontend_url'] = sanitize_text_field( $input['frontend_url'] );
+		}
+
 		return $sanitary_values;
 	}
 
 	public function export_to_json_settings_section_info() {
+		
+	}
+
+	public function viper_setup_section_info() {
 		
 	}
 
@@ -165,6 +187,13 @@ class ExportToJSONSettings {
 		printf(
 			'<input class="regular-text" type="text" name="export_to_json_settings_option_name[authorization_key]" id="authorization_key" value="%s">',
 			isset( $this->export_to_json_settings_options['authorization_key'] ) ? esc_attr( $this->export_to_json_settings_options['authorization_key']) : ''
+		);
+	}
+
+	public function frontend_url_callback() {
+		printf(
+			'<input class="regular-text" type="text" name="export_to_json_settings_option_name[frontend_url]" id="frontend_url" value="%s"  />',
+			isset( $this->export_to_json_settings_options['frontend_url'] ) ? esc_attr( $this->export_to_json_settings_options['frontend_url']) : ''
 		);
 	}
 }
