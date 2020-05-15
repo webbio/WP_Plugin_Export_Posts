@@ -27,7 +27,7 @@ if( !class_exists('Post') ) :
             $metaData = $this->getMetaData($post_id);
 
             return array(
-                '_id' => $blogId . '-post-' . $post->ID,
+                '_id' => 'wordpress:' . $blogId . '-post-' . $post->ID,
                 'blogId' => $blogId,
                 'type' => 'post',
                 'taxonomies' => $taxonomies,
