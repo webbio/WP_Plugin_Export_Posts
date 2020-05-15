@@ -17,7 +17,7 @@ class Menu {
         $menu = $this->getMenuItems($menu_id);
 
         return array(
-            '_id' => $blogId . '-menu-' . $menu_id,
+            '_id' => 'wordpress:' . $blogId . '-menu-' . $menu_id,
             'blogId' => $blogId,
             'type' => 'menu',
             'data' => array(
