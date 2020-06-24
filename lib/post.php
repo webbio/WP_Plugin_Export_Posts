@@ -1,5 +1,6 @@
 <?php
 
+include('translator.php');
 // exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -7,6 +8,8 @@ if( ! defined( 'ABSPATH' ) ) exit;
 // check if class already exists
 if( !class_exists('Post') ) :
     class Post {
+
+        var $Translator;
 
         function __construct() {
 
@@ -16,9 +19,20 @@ if( !class_exists('Post') ) :
             // print_r($_POST);
 
             // die();
-
-
             $blogId = get_current_blog_id();
+
+            $this->Translator = new Translator();
+            $translation = $this->Translator->createTranslation($post_id, $blogId);
+
+            if($translation == false) {
+                return $this->createPost($post_id, $blogId);
+            } else {
+                return $translation;
+            }
+            
+        }
+
+        function createPost($post_id, $blogId) {
             $post = get_post($post_id);
             $postMeta = get_fields($post_id);
             $permalink = get_permalink($post_id);
@@ -36,7 +50,7 @@ if( !class_exists('Post') ) :
                     'post' => $post,
                     'permalink' => $permalink,
                     'modules' => $modules
-                ),
+                    ),
             );
         }
 

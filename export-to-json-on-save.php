@@ -29,6 +29,7 @@ class ExportToJsonOnSave {
 	var $Post;
 	var $Menu;
 	var $General;
+	var $Translator;
 	
 	/*
 	*  __construct
@@ -78,6 +79,9 @@ class ExportToJsonOnSave {
 		if(class_exists('General')) {
 			$this->General = new General();
 		}
+		if(class_exists('Translation')) {
+			$this->Translator = new Translator();
+		}
 	}
 
 	function nc_settings_link( $links ) {
@@ -99,7 +103,7 @@ class ExportToJsonOnSave {
 
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
-		if (get_post_status($post_id) === 'publish'){
+		if (get_post_status($post_id) === 'publish' || $post_id = 'options'){
 			$this->CouchDBSender->sendItem($post);
 		}
 	}
