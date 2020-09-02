@@ -104,7 +104,7 @@ class ExportToJsonOnSave {
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
 		$postData = $post['data'];
-		$PostInfo = $postData['post'];
+		$postInfo = $postData['post'];
 		$postType = $PostInfo->post_type;
 
 		if (
