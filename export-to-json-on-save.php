@@ -105,7 +105,7 @@ class ExportToJsonOnSave {
 		$post = $this->Post->getPost($post_id);
 		$postData = $post['data'];
 		$postInfo = $postData['post'];
-		$postType = $PostInfo->post_type;
+		$postType = $postInfo->post_type;
 
 		if (
 			(get_post_status($post_id) === 'publish' || $post_id = 'options') 
