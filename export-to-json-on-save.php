@@ -103,7 +103,15 @@ class ExportToJsonOnSave {
 
 	function onPostSave($post_id) {
 		$post = $this->Post->getPost($post_id);
-		if (get_post_status($post_id) === 'publish' || $post_id = 'options' && get_post_status($post_id) !== 'draft'){
+		$postData = $post['data'];
+		$postInfo = $postData['post'];
+		$postType = $postInfo->post_type;
+
+		if (
+			(get_post_status($post_id) === 'publish' || $post_id = 'options') 
+			&& get_post_status($post_id) !== 'draft' 
+			&& $postType !== 'acf_template' 
+		){
 			$this->CouchDBSender->sendItem($post);
 		}
 	}
