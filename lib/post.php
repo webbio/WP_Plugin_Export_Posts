@@ -16,9 +16,6 @@ if( !class_exists('Post') ) :
         }
 
         function getPost($post_id) {
-            // print_r($_POST);
-
-            // die();
             $blogId = get_current_blog_id();
 
             $this->Translator = new Translator();
@@ -105,9 +102,9 @@ if( !class_exists('Post') ) :
             $metaValue = get_post_meta($post_id, '_' . $metaKey, true);
 
             if (empty($_POST[$metaKey]) && isset($_POST[$metaKey]) == false) {
-                return get_post_meta($post_id, '_' . $metaKey, true);
+                return stripcslashes(get_post_meta($post_id, '_' . $metaKey, true));
             }
-            return $_POST[$metaKey];
+            return stripcslashes($_POST[$metaKey]);
         }
 
         function getHrefLang($post_id) {
