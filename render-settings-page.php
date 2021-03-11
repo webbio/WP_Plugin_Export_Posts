@@ -63,7 +63,11 @@ class ExportToJSONSettings {
 				|| $post_id == 'options' 
 			){
 				$this->CouchDBSender->sendItem($post);
+			} else {
+				// remove posts that are in concept when exported
+				$this->CouchDBSender->removeItem($post);
 			}
+
 		endwhile;
 
 		$pages = get_pages(); 
