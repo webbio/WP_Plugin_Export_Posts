@@ -52,8 +52,18 @@ class ExportToJSONSettings {
 		while ( $query->have_posts() ) : $query->the_post();
 			$postId = get_the_ID();
 
-			$post = $this->Post->getPost($postId);
-			$this->CouchDBSender->sendItem($post);
+			$post = $this->Post->getPost($postId); 
+			// Checks if post is in concept before exporting all posts
+			if (
+				(
+					get_post_status($post_id) == 'publish' 
+					&& get_post_status($post_id) != 'draft' 
+					&& $postType != 'acf_template'
+				)
+				|| $post_id == 'options' 
+			){
+				$this->CouchDBSender->sendItem($post);
+			}
 		endwhile;
 
 		$pages = get_pages(); 
