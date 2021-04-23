@@ -1,6 +1,7 @@
 <?php
 
 include('translator.php');
+include('redirects.php');
 // exit if accessed directly
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -10,23 +11,39 @@ if( !class_exists('Post') ) :
     class Post {
 
         var $Translator;
+        var $Redirects;
 
         function __construct() {
 
         }
 
         function getPost($post_id) {
+            $pageName = $_GET['page'];
             $blogId = get_current_blog_id();
 
+            if($post_id == 'options'){
+                if($pageName == 'redirects'){
+                    return createRedirect($post_id, $blogId);
+                }
+
+                if($pageName = 'string-translation'){
+                    return createTranslation($post_id, $blogId);
+                }
+            }
+        
+            return $this->createPost($post_id, $blogId);
+        }
+
+        function createRedirect($post_id, $blogId){
+            $this->Redirects = new Redirects();
+            $redirects = $this->Redirects->createRedirect($post_id, $blogId);
+            return $redirects;
+        }
+
+        function createTranslation($post_id, $blogId){
             $this->Translator = new Translator();
             $translation = $this->Translator->createTranslation($post_id, $blogId);
-
-            if($translation == false) {
-                return $this->createPost($post_id, $blogId);
-            } else {
-                return $translation;
-            }
-            
+            return $translation;
         }
 
         function createPost($post_id, $blogId) {

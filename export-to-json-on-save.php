@@ -5,6 +5,7 @@ include('lib/couchdb-sender.php');
 include('lib/post.php');
 include('lib/menu.php');
 include('lib/general-configuration.php');
+include('lib/redirects.php');
 /*
 Plugin Name: Export to JSON on Save
 Description: When a post is saved we generate a json export for this post
@@ -30,6 +31,7 @@ class ExportToJsonOnSave {
 	var $Menu;
 	var $General;
 	var $Translator;
+	var $Redirects;
 	
 	/*
 	*  __construct
@@ -82,6 +84,9 @@ class ExportToJsonOnSave {
 		if(class_exists('Translation')) {
 			$this->Translator = new Translator();
 		}
+		if(class_exists('Translation')) {
+			$this->Redirects = new Redirects();
+		}
 	}
 
 	function nc_settings_link( $links ) {
@@ -106,6 +111,7 @@ class ExportToJsonOnSave {
 		$postData = $post['data'];
 		$postInfo = $postData['post'];
 		$postType = $postInfo->post_type;
+
 		if (
 			(
 				get_post_status($post_id) == 'publish' 
@@ -137,7 +143,6 @@ class ExportToJsonOnSave {
 		$url = $this->General->filter_rest_url();
 		return $url;
 	}
-
 }
 
 // initialize
