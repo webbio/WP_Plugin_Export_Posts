@@ -18,16 +18,16 @@ if( !class_exists('Post') ) :
         }
 
         function getPost($post_id) {
-            $pageName = $_GET['page'];
             $blogId = get_current_blog_id();
 
             if($post_id == 'options'){
+                $pageName = $_GET['page'];
                 if($pageName == 'redirects'){
-                    return createRedirect($post_id, $blogId);
+                    return $this->createRedirect($post_id, $blogId);
                 }
 
-                if($pageName = 'string-translation'){
-                    return createTranslation($post_id, $blogId);
+                if($pageName == 'string-translation'){
+                    return $this->createTranslation($post_id, $blogId);
                 }
             }
         
