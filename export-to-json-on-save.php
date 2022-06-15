@@ -28,7 +28,6 @@ class ExportToJsonOnSave {
 	var $CouchDBSender;
 	var $Post;
 	var $Menu;
-	var $General;
 	var $Translator;
 	
 	/*
@@ -75,9 +74,6 @@ class ExportToJsonOnSave {
 		}
 		if(class_exists('Menu')) {
 			$this->Menu = new Menu();
-		}
-		if(class_exists('General')) {
-			$this->General = new General();
 		}
 		if(class_exists('Translation')) {
 			$this->Translator = new Translator();
@@ -129,7 +125,7 @@ class ExportToJsonOnSave {
 	}
 
 	function setHomeUrl() {
-		$url = $this->General->wpse_pre_option_home();
+		$url = get_home_url();
 		return $url;
 	}
 
