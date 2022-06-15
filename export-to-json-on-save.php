@@ -29,6 +29,7 @@ class ExportToJsonOnSave {
 	var $Post;
 	var $Menu;
 	var $Translator;
+	var $General;
 	
 	/*
 	*  __construct
@@ -78,6 +79,9 @@ class ExportToJsonOnSave {
 		if(class_exists('Translation')) {
 			$this->Translator = new Translator();
 		}
+		if(class_exists('General')) {
+			$this->General = new General();
+		}
 	}
 
 	function nc_settings_link( $links ) {
@@ -125,7 +129,7 @@ class ExportToJsonOnSave {
 	}
 
 	function setHomeUrl() {
-		$url = get_home_url();
+		$url = $this->General->wpse_pre_option_home();
 		return $url;
 	}
 
