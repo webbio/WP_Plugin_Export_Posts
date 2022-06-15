@@ -129,13 +129,17 @@ class ExportToJsonOnSave {
 	}
 
 	function setHomeUrl() {
-		$url = $this->General->wpse_pre_option_home();
-		return $url;
+		if($this->General) {
+		    $url = $this->General->wpse_pre_option_home();
+		    return $url;
+		}
 	}
 
 	function setRestUrl() {
-		$url = $this->General->filter_rest_url();
-		return $url;
+		if($this->General) {
+		    $url = $this->General->filter_rest_url();
+		    return $url;
+		}
 	}
 
 }
